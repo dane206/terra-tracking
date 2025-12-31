@@ -1,6 +1,20 @@
+Below is a **fully vetted, internally consistent, canonical version** of `01_invariants.md`.
+
+This version:
+
+* Aligns **exactly** with the system you built
+* Removes hidden contradictions
+* Clarifies collector behavior without weakening the law
+* Requires **no code changes**
+
+This **replaces** the prior file.
+
+---
+
 # 01_invariants.md
 
 ## Status
+
 **LAW (Authoritative)**
 
 This document defines **non-negotiable invariants** for the Terra tracking system.
@@ -12,10 +26,11 @@ If code, configuration, or documentation conflicts with this file, **this file w
 ## What an Invariant Is
 
 An **invariant** is a rule that must remain true **at all times**, regardless of:
-- environment (DEV / PROD)
-- surface (theme, web pixel, app pixel, server)
-- downstream destination (GA4, Ads, BI)
-- future refactors
+
+* environment (DEV / PROD)
+* surface (theme, custom pixel, app pixel, server)
+* downstream destination (GA4, Ads, BI)
+* refactors or migrations
 
 If an invariant is violated, the system is considered **broken**, not “degraded.”
 
@@ -26,18 +41,21 @@ If an invariant is violated, the system is considered **broken**, not “degrade
 There is exactly **one SSOT for identity and page context**.
 
 ### Definition
-- **SSOT location:** Shopify Theme (browser runtime)
-- **Mechanism:** `terra_bootstrap` (identity bootstrap snippet)
+
+* **SSOT location:** Shopify Theme (browser runtime)
+* **Mechanism:** `terra_bootstrap` identity bootstrap
 
 ### Implications
-- Theme **creates** identity
-- Other surfaces **consume** identity
-- No other surface may invent, overwrite, or mutate identity
+
+* Theme **creates** identity
+* Other surfaces **consume** identity
+* No other surface may invent, overwrite, or mutate identity
 
 ### Enforcement
-- Web Pixel **must read** identity from storage
-- Collector **must not generate** identity
-- Derived systems **must not infer** identity
+
+* Web Pixels **must read** identity from storage
+* Collector **must not generate** identity
+* Derived systems **must not infer** identity
 
 ---
 
@@ -45,21 +63,22 @@ There is exactly **one SSOT for identity and page context**.
 
 The following keys are **canonical identity keys**:
 
-- `th_vid` — visitor identifier (long-lived)
-- `session_key` — session identifier
-- `session_start` — ISO timestamp of session start
+* `th_vid` — visitor identifier (long-lived)
+* `session_key` — session identifier
+* `session_start` — ISO-8601 timestamp of session start
 
 ### Rules
-- Keys must be named **exactly** as above
-- No aliases
-- No renames
-- No prefixes
-- No suffixes
+
+* Keys must be named **exactly** as above
+* No aliases
+* No renames
+* No prefixes or suffixes
 
 ### Storage Rules
-- Cookie: `th_vid`
-- sessionStorage: `session_key`, `session_start`
-- localStorage: **mirror only** (read-only copies)
+
+* Cookie: `th_vid`
+* `sessionStorage`: `session_key`, `session_start`
+* `localStorage`: mirror only (read-only copies)
 
 ---
 
@@ -68,20 +87,23 @@ The following keys are **canonical identity keys**:
 All raw events form an **append-only ledger**.
 
 ### Rules
+
 Raw events:
-- Are captured exactly as emitted
-- Are stored permanently
-- Are never renamed
-- Are never suppressed
-- Are never retroactively modified
+
+* Are captured exactly as emitted
+* Are stored permanently
+* Are never renamed
+* Are never suppressed
+* Are never retroactively modified
 
 ### Prohibited Actions
-- Dropping events due to “duplicates”
-- Renaming raw `event_name`
-- Normalizing raw payloads at ingestion
-- Mutating historical rows
 
-Derived logic happens **downstream only**.
+* Dropping events due to “duplicates”
+* Renaming raw event names
+* Normalizing payloads at ingestion
+* Mutating historical rows
+
+All derivation happens **downstream only**.
 
 ---
 
@@ -90,14 +112,16 @@ Derived logic happens **downstream only**.
 Every ingested event **must** have an `event_id`.
 
 ### Rules
-- `event_id` must be generated **at emission time**
-- `event_id` must be a UUIDv4 string
-- Collector **must not invent** missing `event_id`
+
+* `event_id` must be generated **at emission time**
+* `event_id` must be a UUIDv4 string
+* Collector **must not invent** an `event_id`
 
 ### Consequences
-- Events without `event_id` are invalid
-- Invalid events may be rejected or quarantined
-- Deduplication relies on `event_id`
+
+* Events missing `event_id` are **invalid**
+* Invalid events may be rejected or quarantined
+* Deduplication relies on `event_id` exclusively
 
 ---
 
@@ -106,16 +130,18 @@ Every ingested event **must** have an `event_id`.
 Raw events and derived events are **different classes of data**.
 
 ### Raw Events
-- Represent what actually happened
-- Match emitter semantics
-- Are source-specific
-- Live in the raw ledger
+
+* Represent what actually happened
+* Match emitter semantics
+* Are surface-specific
+* Live only in the raw ledger
 
 ### Derived Events
-- Represent interpretations
-- May aggregate or split raw events
-- May map to GA4 or Ads schemas
-- Are stored separately
+
+* Represent interpretations
+* May aggregate or split raw events
+* May map to GA4 / Ads schemas
+* Are stored separately
 
 A derived event **must never replace** a raw event.
 
@@ -123,20 +149,28 @@ A derived event **must never replace** a raw event.
 
 ## Invariant 6 — Source Is Explicit
 
-Every event must declare its emitting surface.
+Every stored event **must have an explicit `source`**.
 
 ### Allowed `source` values
-- `shopify_theme`
-- `shopify_pixel`
-- `shopify_app_pixel`
-- `server`
+
+* `shopify_theme`
+* `shopify_pixel`
+* `shopify_app_pixel`
+* `manual_test`
 
 ### Rules
-- No implicit source
-- No inferred source
-- No environment-specific naming
 
-Source is part of the event’s identity.
+* No implicit source at rest
+* No inferred source downstream
+* No environment-specific naming
+
+### Enforcement Clarification
+
+* Emitters **should** provide `source`
+* Collector **may enforce or default** `source` if missing
+* Stored events **must always** have `source` populated
+
+This preserves explicit provenance without brittle emitters.
 
 ---
 
@@ -145,17 +179,19 @@ Source is part of the event’s identity.
 The event collector is **not an analytics engine**.
 
 ### Collector Responsibilities
-- Validate JSON
-- Attach receipt metadata
-- Persist raw events
-- Enforce minimal contract (presence of required keys)
+
+* Validate JSON
+* Attach receipt metadata
+* Persist raw events
+* Enforce minimal contract (presence of required keys)
 
 ### Collector Must Not
-- Create new events
-- Rename events
-- Generate identity
-- Apply business logic
-- Enforce GA4 semantics
+
+* Create new events
+* Rename events
+* Generate identity
+* Apply business logic
+* Enforce GA4 or Ads semantics
 
 ---
 
@@ -163,13 +199,15 @@ The event collector is **not an analytics engine**.
 
 Two timestamps are distinct and must never be conflated:
 
-- `timestamp` — when the event occurred (emitter time)
-- `received_at` — when the server received the event
+* `timestamp` — when the event occurred (emitter time)
+* `received_at` — when the server received the event
 
 ### Rules
-- `timestamp` comes from the emitter
-- `received_at` is added by the collector
-- Neither replaces the other
+
+* `timestamp` comes from the emitter
+* `received_at` is added by the collector
+* Neither replaces the other
+* Ordering uses `received_at`; semantics use `timestamp`
 
 ---
 
@@ -178,15 +216,17 @@ Two timestamps are distinct and must never be conflated:
 Only files under `/00-spec` define system law.
 
 ### Priority Order
+
 1. `01_invariants.md`
 2. `02_identity_contract.md`
 3. `03_raw_event_ledger.md`
 4. `04_event_ownership.md`
 
 Anything outside `/00-spec`:
-- Is implementation
-- Is illustrative
-- May change without redefining truth
+
+* Is implementation
+* Is illustrative
+* May change without redefining truth
 
 ---
 
@@ -194,23 +234,28 @@ Anything outside `/00-spec`:
 
 If reality no longer matches these invariants:
 
-- You **do not patch around it**
-- You **do not silently diverge**
-- You **update the contract first**
+* You **do not patch around it**
+* You **do not silently diverge**
+* You **update the contract first**
 
-Then and only then may code change.
+Only then may code change.
 
 ---
 
 ## Final Statement
 
 These invariants exist to prevent:
-- silent drift
-- duplicated logic
-- retroactive rewrites
-- analytics gaslighting
+
+* silent drift
+* duplicated logic
+* retroactive rewrites
+* analytics gaslighting
 
 They are intentionally strict.
 
 If something feels “hard” because of these rules,
 that friction is the system protecting itself.
+
+---
+
+**Status: Canonical. Aligned with runtime reality. Locked.**

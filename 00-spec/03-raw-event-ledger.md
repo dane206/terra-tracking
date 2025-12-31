@@ -1,283 +1,178 @@
-# 03_raw_shopify_events.md
+# Raw Event Ledger (Contract)
 
-# Raw Shopify Events (Ledger Contract)
+## Purpose
 
-**Purpose:** Define the permanent, immutable raw event ledger ingested from Shopify surfaces without semantic mutation.  
-**Owner:** Shopify Web Pixel (Custom Pixel) + Shopify Theme (explicit theme-native raw emissions)  
-**Status:** Canonical (LAW)  
-**Effective Version:** 1.0.5  
-**Last Updated:** 2025-12-29
+Store **raw events exactly as received** from Shopify surfaces and manual probes, without transforming into GA4 or advertising semantics.
 
----
+This ledger is the **authoritative write-ahead log** for all behavioral data.
 
-## 1) Definition of “Raw Event”
+## Owner surfaces
 
-A **raw event** is the closest possible representation of what was emitted at the source, captured at ingestion time **without semantic mutation**.
+* Shopify Theme
+* Shopify Custom Pixel
+* Shopify App Pixel (if enabled)
+* Manual probes / tests
 
-Raw events are not analytics events.  
-Raw events are not GA4 events.  
-Raw events are not “cleaned”.
+## Status
 
-They form a **ledger**.
+**Canonical. Locked.**
 
 ---
 
-## 2) Core Ledger Invariants (Non-Negotiable)
+## Law
 
-If any invariant is violated, the system is **incorrect**.
-
-### 2.1 Immutability
-- Raw events are stored permanently
-- Raw events are never updated
-- Raw events are never deleted
-- Raw events are never renamed
-
-### 2.2 Fidelity
-- Events are captured exactly as emitted
-- No semantic transformation occurs at ingestion
-- No inferred meaning is added
-
-### 2.3 Completeness
-- Unknown event names are accepted
-- New Shopify event types must not break ingestion
-- Missing optional fields must not cause rejection
-
-### 2.4 Separation of Concerns
-- Raw ingestion never creates derived events
-- GA4 / Ads semantics happen downstream only
-- Dedupe logic must not suppress raw events
+* Raw ledger rows are **append-only**.
+* **No renaming, suppression, filtering, or cleaning** at ingestion.
+* **No GA4 / Ads semantics** at ingestion.
+* All derivations happen **downstream only**.
 
 ---
 
-## 3) Global Required Invariant
+## Canonical payload contract (what emitters send)
 
-### 3.1 `event_id` is REQUIRED
-Every raw event **MUST** include a non-null `event_id`.
+Every event POSTed to `/track` MUST include:
 
-`event_id` is required for:
-- dedupe
-- traceability
-- auditing
-- downstream joins
+* `source` (string)
+  One of:
 
-**Source responsibility:**
-- Shopify Theme → generates `event_id`
-- Shopify Web Pixel → generates `event_id`
-- Collector → must reject or quarantine events missing `event_id`
+  * `shopify_theme`
+  * `shopify_pixel`
+  * `shopify_app_pixel`
+  * `manual_test`
 
-If `event_id` is null, the event violates this contract.
+* `event_id` (string)
+  Required. Globally unique per event.
 
----
+* `event` (string)
+  Raw event name exactly as emitted
+  Examples: `page_viewed`, `collection_viewed`, `clicked`, `raw_page_view`
 
-## 4) Field Naming Rules (LAW)
+* `timestamp` (string, ISO-8601)
+  Time the event occurred at the emitting surface.
 
-### 4.1 No leading underscores for canonical fields
-Canonical field names **MUST NOT** use leading underscores.
+### Recommended (nullable)
 
-**Canonical:** `source`  
-**Canonical:** `event_name`  
-**Canonical:** `event_id`
+* `th_vid` (string)
+* `session_key` (string)
+* `session_start` (string, ISO-8601)
 
-### 4.2 Legacy compatibility
-If a source still sends `_source`, the collector may map it to `source`, but the ledger contract is `source`.
+### Raw containers (do not flatten)
 
----
+* `payload` (object or null)
+* `context` (object or null)
+* `shop_domain` (string or null)
 
-## 5) Sources Currently Ingested
-
-### 5.1 Shopify Web Pixel (Custom Pixel)
-Primary Shopify-emitted event stream.
-
-**Canonical source value:** `shopify_pixel`
-
-Minimum required outbound payload fields:
-
-| Field | Requirement |
-|---|---|
-| `event_id` | REQUIRED (non-null) |
-| `source` | REQUIRED (`shopify_pixel`) |
-| `event_name` | REQUIRED (Shopify event name) |
-| `timestamp` | REQUIRED (Shopify timestamp) |
-| `payload` | REQUIRED (raw `event.data`) |
-| `context` | OPTIONAL (recommended, raw context object) |
-| `shop_domain` | OPTIONAL (nullable) |
-| `th_vid` | REQUIRED if available (nullable allowed) |
-| `session_key` | REQUIRED if available (nullable allowed) |
-| `session_start` | REQUIRED if available (nullable allowed) |
-
-**Identity rule:**
-- Pixel must **not** generate identity
-- Pixel only **reads** identity from `localStorage`
-- Identity fields may be null but must be present as keys when possible
+**All additional fields remain inside `payload` or `context`.**
 
 ---
 
-### 5.2 Shopify Theme (Bootstrap + Producers)
-Theme is the identity + page-context source of truth.
+## Legacy compatibility (collector-only)
 
-**Canonical source value:** `shopify_theme`
+To prevent breakage, the collector MAY accept older field names and map them internally:
 
-Theme owns:
-- `th_vid`
-- `session_key`
-- `session_start`
-- `ctx_version`
-- page fields (`page_type`, `page_location`, etc.)
+* `body._source` → `source`
+* `body.occurred_at` → `timestamp`
+* `body.shopify_event` or `body.event_name` → `event`
 
-Allowed theme raw events (examples):
-- `terra_identity_ready`
-- `terra_shopify_loaded`
-- `raw_page_view`
-
-Theme **must generate** `event_id` for every event it emits.
-
-Theme **must not** emit Shopify semantic events that the pixel already emits (e.g. `checkout_started`).
+Emitters MUST NOT rely on legacy keys going forward.
 
 ---
 
-### 5.3 Shopify App Pixel (Web Pixel Extension)
-If enabled, treat it as another raw source.
+## BigQuery raw ledger contract
 
-**Canonical source value:** `shopify_app_pixel`
+### Dataset / table
 
-Rules:
-- same raw ledger treatment
-- duplication allowed in raw
-- duplication resolved only downstream
+```
+terra-analytics-dev.raw_dev.shopify_pixel_events
+```
 
----
+### Columns
 
-## 6) Raw Event Names (Observed Examples)
+* `received_at` TIMESTAMP **(required)**
+  Server receipt time (authoritative ordering).
 
-This list is open-ended. Ledger must accept unknown values.
+* `source` STRING
+  Emitting surface (explicit).
 
-### 6.1 Shopify Pixel examples
-- `page_viewed`
-- `clicked`
-- `input_focused`
-- `input_blurred`
-- `input_changed`
-- `form_submitted`
-- `search_submitted`
-- `collection_viewed`
-- `product_viewed`
-- `cart_viewed`
-- `product_added_to_cart`
-- `product_removed_from_cart`
-- `checkout_started`
-- `checkout_contact_info_submitted`
-- `checkout_address_info_submitted`
-- `checkout_shipping_info_submitted`
-- `payment_info_submitted`
-- `checkout_completed`
+* `shopify_event` STRING
+  Optional mirror of `payload.event` for indexing only.
 
-### 6.2 Theme examples
-- `terra_identity_ready`
-- `terra_shopify_loaded`
-- `raw_page_view`
+* `event_id` STRING
+  Required. Used for deduplication downstream.
+
+* `payload` JSON **(required)**
+  Entire inbound request body as **native JSON**.
+
+* `th_vid` STRING (nullable)
+
+* `session_key` STRING (nullable)
+
+* `session_start` TIMESTAMP (nullable)
+
+### Rules
+
+* `payload` accepts **arbitrary JSON shapes**
+* **No schema enforcement** at this layer
+* Unknown or noisy events are valid
+* Table is not optimized for human readability
 
 ---
 
-## 7) BigQuery Raw Ledger Table Contract
+## Notes on JSON usage
 
-### 7.1 Table
-Dataset and table:
-
-- Dataset: `terra_events_raw`
-- Table: `events_raw`
-
-DEV project: `terra-analytics-dev`
-
-Fully-qualified:
-
-`terra-analytics-dev.terra_events_raw.events_raw`
+* `payload` is stored as **BigQuery native JSON**
+* Use `JSON_VALUE(payload, "$.event")` for scalar filtering
+* Use `payload.field` for native JSON access
+* Use `TO_JSON_STRING(payload)` for inspection / debugging
 
 ---
 
-### 7.2 Required Columns
+## Proof queries (BigQuery CLI)
 
-| Column | Type | Notes |
-|---|---|---|
-| `received_at` | TIMESTAMP | server receipt time |
-| `source` | STRING | REQUIRED |
-| `event_id` | STRING | REQUIRED |
-| `event_name` | STRING | REQUIRED |
-| `event_time` | TIMESTAMP | nullable (parsed from `timestamp`) |
-| `payload_json` | STRING | REQUIRED (full inbound body) |
+### Events in last 2 minutes
 
----
+```sql
+SELECT COUNT(*) AS events_last_2_min
+FROM `terra-analytics-dev.raw_dev.shopify_pixel_events`
+WHERE received_at > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 2 MINUTE);
+```
 
-### 7.3 Payload storage rule
-`payload_json` stores the full inbound request body as a JSON string, unmodified.
+### Count by source + event (last 10 minutes)
 
-Rationale:
-- prevents schema breakage
-- preserves exact source shape
-- enables late parsing in staging
+```sql
+SELECT
+  source,
+  JSON_VALUE(payload, "$.event") AS event,
+  COUNT(*) AS cnt
+FROM `terra-analytics-dev.raw_dev.shopify_pixel_events`
+WHERE received_at > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 10 MINUTE)
+GROUP BY source, event
+ORDER BY cnt DESC;
+```
 
-Typed extraction happens **after raw**, never here.
+### Verify `event_id` presence (last 10 minutes)
 
----
-
-## 8) Collector Enforcement Rules
-
-### 8.1 Collector MUST
-- accept unknown event names
-- insert events without semantic mutation
-- preserve full payload in `payload_json`
-- add `received_at`
-
-### 8.2 Collector MUST reject or quarantine
-- invalid JSON
-- oversized payloads
-- missing `source`
-- missing `event_name`
-- missing `event_id`
-
-### 8.3 Collector MUST NOT
-- generate `event_id`
-- infer identity
-- rename events
-- create derived events
+```sql
+SELECT
+  source,
+  COUNT(*) AS events,
+  COUNTIF(event_id IS NOT NULL AND event_id != '') AS with_event_id
+FROM `terra-analytics-dev.raw_dev.shopify_pixel_events`
+WHERE received_at > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 10 MINUTE)
+GROUP BY source
+ORDER BY source;
+```
 
 ---
 
-## 9) Relationship to Derived Events
-- raw events are inputs
-- derived events are outputs
-- one raw event may produce zero/one/many derived events
-- raw events are never suppressed
+## Final guarantees
+
+* Raw ledger is **lossless**
+* Ordering is **authoritative**
+* Semantics are **deferred**
+* Specs match **runtime reality**
+* No silent drift allowed
 
 ---
 
-## 10) Proof Mode
-When `proof_mode = true`:
-- raw events are always emitted
-- derived events may emit in parallel
-- namespacing applies only to derived events
-
-Raw ledger behavior never changes.
-
----
-
-## 11) Enforcement & Change Control
-
-Any change to:
-- required fields
-- source ownership
-- storage guarantees
-
-Requires:
-1. version bump
-2. update to this document
-3. review of `05_event_ownership_matrix.md`
-
----
-
-## 12) Final Statement
-
-This ledger is immutable by design.
-
-If raw data is wrong, the system is wrong.
-
-**Fix sources. Never rewrite the ledger.**
+**This spec is now canonical and complete.**
