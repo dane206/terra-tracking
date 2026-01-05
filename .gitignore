@@ -8,3 +8,4 @@ build/
 coverage/
 tmp/
 *.tmp
+50-data/runbooks/git-cheat-sheet.md
