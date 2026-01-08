@@ -1,11 +1,13 @@
+
 .DS_Store
-node_modules/
 .env
 .env.*
+.status -sb
 *.log
-dist/
-build/
-coverage/
-tmp/
 *.tmp
 50-data/runbooks/git-cheat-sheet.md
+build/
+coverage/
+dist/
+node_modules/
+tmp/
