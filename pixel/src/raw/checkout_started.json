@@ -1,0 +1,182 @@
+{
+    "event": {
+        "id": "sh-c45640b7-0CC9-49AB-80F1-9F689BA5F003",
+        "name": "checkout_started",
+        "data": {
+            "checkout": {
+                "buyerAcceptsEmailMarketing": false,
+                "buyerAcceptsSmsMarketing": false,
+                "attributes": [
+                    {
+                        "key": "utm_data_source",
+                        "value": "checkout_promotions_url_bar"
+                    },
+                    {
+                        "key": "utm_source",
+                        "value": "klaviyo"
+                    },
+                    {
+                        "key": "utm_medium",
+                        "value": "email_flow"
+                    },
+                    {
+                        "key": "utm_campaign",
+                        "value": "50% Off Add-On Upsell Test #4 August 11, 2025 Variation A"
+                    },
+                    {
+                        "key": "edge_delivery_enabled",
+                        "value": "true"
+                    },
+                    {
+                        "key": "edge_delivery",
+                        "value": "true"
+                    },
+                    {
+                        "key": "edge_delivery_session_id",
+                        "value": "e6e79fa2-3abd-4ee2-b66c-8e06efa70878"
+                    },
+                    {
+                        "key": "edge_delivery_visitor_id",
+                        "value": "d3b11250-ef4c-4747-8b13-3957f61deabd"
+                    },
+                    {
+                        "key": "edge_delivery_experiment_id",
+                        "value": "b858a964-b48a-44b5-9a05-9bb713c86e7a"
+                    },
+                    {
+                        "key": "_metorik_utm_campaign",
+                        "value": "50%25+Off+Add-On+Upsell+Test+%234+August+11%2C+2025+Variation+A"
+                    },
+                    {
+                        "key": "_metorik_utm_source",
+                        "value": "klaviyo"
+                    },
+                    {
+                        "key": "_metorik_utm_medium",
+                        "value": "email_flow"
+                    }
+                ],
+                "billingAddress": {
+                    "address1": null,
+                    "address2": null,
+                    "city": null,
+                    "country": "US",
+                    "countryCode": "US",
+                    "firstName": null,
+                    "lastName": null,
+                    "phone": null,
+                    "province": "WA",
+                    "provinceCode": "WA",
+                    "zip": null
+                },
+                "token": "c53ffe802a6d441c8484015f055076fe",
+                "currencyCode": "USD",
+                "discountApplications": [],
+                "discountsAmount": {
+                    "amount": 0,
+                    "currencyCode": "USD"
+                },
+                "email": "",
+                "phone": "",
+                "lineItems": [
+                    {
+                        "discountAllocations": [],
+                        "id": "43049246949567",
+                        "quantity": 1,
+                        "title": "Acid Relief",
+                        "variant": {
+                            "id": "43049246949567",
+                            "image": {
+                                "src": "https://cdn.shopify.com/s/files/1/0624/5810/1951/files/acid-reliefterra-health-essentials-712125.png?v=1720479541"
+                            },
+                            "price": {
+                                "amount": 49,
+                                "currencyCode": "USD"
+                            },
+                            "product": {
+                                "id": "7318157557951",
+                                "title": "Acid Relief",
+                                "vendor": "Terra Health Essentials",
+                                "type": "Gut Health",
+                                "untranslatedTitle": "Acid Relief",
+                                "url": "/products/acid-relief"
+                            },
+                            "sku": "THEACIDRELFB1",
+                            "title": "30 Day Supply - OTP",
+                            "untranslatedTitle": "30 Day Supply - OTP"
+                        },
+                        "finalLinePrice": {
+                            "amount": 49,
+                            "currencyCode": "USD"
+                        },
+                        "sellingPlanAllocation": null,
+                        "properties": []
+                    }
+                ],
+                "localization": {
+                    "country": {
+                        "isoCode": "US"
+                    },
+                    "language": {
+                        "isoCode": "en-US"
+                    },
+                    "market": {
+                        "id": "gid://shopify/Market/22437560511",
+                        "handle": "us"
+                    }
+                },
+                "order": {
+                    "id": null,
+                    "customer": {
+                        "id": null,
+                        "isFirstOrder": null
+                    }
+                },
+                "delivery": {
+                    "selectedDeliveryOptions": []
+                },
+                "shippingAddress": {
+                    "address1": null,
+                    "address2": null,
+                    "city": null,
+                    "country": "US",
+                    "countryCode": "US",
+                    "firstName": null,
+                    "lastName": null,
+                    "phone": null,
+                    "province": "WA",
+                    "provinceCode": "WA",
+                    "zip": null
+                },
+                "subtotalPrice": {
+                    "amount": 49,
+                    "currencyCode": "USD"
+                },
+                "shippingLine": {
+                    "price": {
+                        "amount": 0,
+                        "currencyCode": "USD"
+                    }
+                },
+                "smsMarketingPhone": null,
+                "totalTax": {
+                    "amount": 0,
+                    "currencyCode": "USD"
+                },
+                "totalPrice": {
+                    "amount": 49,
+                    "currencyCode": "USD"
+                },
+                "transactions": []
+            }
+        },
+        "type": "standard",
+        "timestamp": "2026-01-16T01:05:43.908Z",
+        "context": "...",
+        "seq": 1,
+        "clientId": "be0db2a7-be2b-40ca-b502-a4c868d68385"
+    },
+    "eventNameAsSubscribed": "checkout_started",
+    "subscriptionId": "2ec88e8c-ddeb-46ef-b529-f237b8359f15",
+    "status": "SUCCESS"
+}
