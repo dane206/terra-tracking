@@ -1,5 +1,5 @@
 /* =========================
-   Terra Checkout Pixel v1
+   Terra Custom Pixel v2
    ========================= */
 
 const ENDPOINT = "https://pixel-ingest-dev-600339193870.us-central1.run.app/track";
@@ -15,9 +15,10 @@ function uuidv4() {
 
 function post(event_name, event) {
   try {
-    fetch(ENDPOINT, {
+    browser.fetch(ENDPOINT, {
       method: "POST",
       headers: { "content-type": "application/json" },
+      keepalive: true,
       body: JSON.stringify({
         data_source: "shopify_checkout_pixel",
         event_name: event_name,
@@ -28,6 +29,62 @@ function post(event_name, event) {
     });
   } catch (_) {}
 }
+
+/* =========================
+   Extra Events
+   ========================= */
+
+analytics.subscribe("search_submitted", function (event) {
+  post("search_submitted", event);
+});
+
+analytics.subscribe("alert_displayed", function (event) {
+  post("alert_displayed", event);
+});
+
+analytics.subscribe("ui_extension_errored", function (event) {
+  post("ui_extension_errored", event);
+});
+
+analytics.subscribe("clicked", function (event) {
+  post("clicked", event);
+});
+
+analytics.subscribe("form_submitted", function (event) {
+  post("form_submitted", event);
+});
+
+analytics.subscribe("post_purchase_viewed", function (event) {
+  post("post_purchase_viewed", event);
+});
+
+/* =========================
+   Storefront Events
+   ========================= */
+
+analytics.subscribe("cart_viewed", function (event) {
+  post("cart_viewed", event);
+});
+
+analytics.subscribe("collection_viewed", function (event) {
+  post("collection_viewed", event);
+});
+
+analytics.subscribe("page_viewed", function (event) {
+  post("page_viewed", event);
+});
+
+analytics.subscribe("product_added_to_cart", function (event) {
+  post("product_added_to_cart", event);
+});
+
+analytics.subscribe("product_removed_from_cart", function (event) {
+  post("product_removed_from_cart", event);
+});
+
+analytics.subscribe("product_viewed", function (event) {
+  post("product_viewed", event);
+});
 
 /* =========================
    Checkout Funnel Events

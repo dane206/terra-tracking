@@ -1,61 +1,16 @@
 {
-    "event": {
-        "id": "sh-c456ef4b-6A3C-41D8-CFB8-03408BFEAE0B",
+    "data_source": "shopify_checkout_pixel",
+    "event_name": "payment_info_submitted",
+    "event_id": "9ad8630e-5051-4af0-93dd-927d925390e2",
+    "event_time": "2026-01-19T02:18:39.888Z",
+    "raw": {
+        "id": "sh-d40e43c1-F522-4575-F0DB-5A293EA39245",
         "name": "payment_info_submitted",
         "data": {
             "checkout": {
                 "buyerAcceptsEmailMarketing": true,
                 "buyerAcceptsSmsMarketing": false,
-                "attributes": [
-                    {
-                        "key": "utm_data_source",
-                        "value": "checkout_promotions_url_bar"
-                    },
-                    {
-                        "key": "utm_source",
-                        "value": "klaviyo"
-                    },
-                    {
-                        "key": "utm_medium",
-                        "value": "email_flow"
-                    },
-                    {
-                        "key": "utm_campaign",
-                        "value": "50% Off Add-On Upsell Test #4 August 11, 2025 Variation A"
-                    },
-                    {
-                        "key": "edge_delivery_enabled",
-                        "value": "true"
-                    },
-                    {
-                        "key": "edge_delivery",
-                        "value": "true"
-                    },
-                    {
-                        "key": "edge_delivery_session_id",
-                        "value": "e6e79fa2-3abd-4ee2-b66c-8e06efa70878"
-                    },
-                    {
-                        "key": "edge_delivery_visitor_id",
-                        "value": "d3b11250-ef4c-4747-8b13-3957f61deabd"
-                    },
-                    {
-                        "key": "edge_delivery_experiment_id",
-                        "value": "b858a964-b48a-44b5-9a05-9bb713c86e7a"
-                    },
-                    {
-                        "key": "_metorik_utm_campaign",
-                        "value": "50%25+Off+Add-On+Upsell+Test+%234+August+11%2C+2025+Variation+A"
-                    },
-                    {
-                        "key": "_metorik_utm_source",
-                        "value": "klaviyo"
-                    },
-                    {
-                        "key": "_metorik_utm_medium",
-                        "value": "email_flow"
-                    }
-                ],
+                "attributes": [],
                 "billingAddress": {
                     "address1": null,
                     "address2": null,
@@ -69,7 +24,7 @@
                     "provinceCode": "WA",
                     "zip": null
                 },
-                "token": "c53ffe802a6d441c8484015f055076fe",
+                "token": "b709c7597b514d8b431593d739c37b0f",
                 "currencyCode": "USD",
                 "discountApplications": [
                     {
@@ -79,12 +34,12 @@
                         "title": "rs2mgmt99x",
                         "type": "DISCOUNT_CODE",
                         "value": {
-                            "percentage": 95
+                            "percentage": 99
                         }
                     }
                 ],
                 "discountsAmount": {
-                    "amount": 46.55,
+                    "amount": 1435.4,
                     "currencyCode": "USD"
                 },
                 "email": "dane@rs2media.com",
@@ -94,7 +49,7 @@
                         "discountAllocations": [
                             {
                                 "amount": {
-                                    "amount": 46.55,
+                                    "amount": 692.96,
                                     "currencyCode": "USD"
                                 },
                                 "discountApplication": {
@@ -104,37 +59,87 @@
                                     "title": "rs2mgmt99x",
                                     "type": "DISCOUNT_CODE",
                                     "value": {
-                                        "percentage": 95
+                                        "percentage": 99
                                     }
                                 }
                             }
                         ],
-                        "id": "43049246949567",
+                        "id": "45808778051738",
                         "quantity": 1,
-                        "title": "Acid Relief",
+                        "title": "The Complete Snowboard",
                         "variant": {
-                            "id": "43049246949567",
+                            "id": "45808778051738",
                             "image": {
-                                "src": "https://cdn.shopify.com/s/files/1/0624/5810/1951/files/acid-reliefterra-health-essentials-712125.png?v=1720479541"
+                                "src": "https://cdn.shopify.com/s/files/1/0680/8820/1370/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1748627148"
                             },
                             "price": {
-                                "amount": 49,
+                                "amount": 699.95,
                                 "currencyCode": "USD"
                             },
                             "product": {
-                                "id": "7318157557951",
-                                "title": "Acid Relief",
-                                "vendor": "Terra Health Essentials",
-                                "type": "Gut Health",
-                                "untranslatedTitle": "Acid Relief",
-                                "url": "/products/acid-relief"
+                                "id": "8514074640538",
+                                "title": "The Complete Snowboard",
+                                "vendor": "Snowboard Vendor",
+                                "type": "snowboard",
+                                "untranslatedTitle": "The Complete Snowboard",
+                                "url": "/products/the-complete-snowboard"
                             },
-                            "sku": "THEACIDRELFB1",
-                            "title": "30 Day Supply - OTP",
-                            "untranslatedTitle": "30 Day Supply - OTP"
+                            "sku": null,
+                            "title": "Ice",
+                            "untranslatedTitle": "Ice"
                         },
                         "finalLinePrice": {
-                            "amount": 49,
+                            "amount": 699.95,
+                            "currencyCode": "USD"
+                        },
+                        "sellingPlanAllocation": null,
+                        "properties": []
+                    },
+                    {
+                        "discountAllocations": [
+                            {
+                                "amount": {
+                                    "amount": 742.44,
+                                    "currencyCode": "USD"
+                                },
+                                "discountApplication": {
+                                    "allocationMethod": "ACROSS",
+                                    "targetSelection": "ALL",
+                                    "targetType": "LINE_ITEM",
+                                    "title": "rs2mgmt99x",
+                                    "type": "DISCOUNT_CODE",
+                                    "value": {
+                                        "percentage": 99
+                                    }
+                                }
+                            }
+                        ],
+                        "id": "45808778510490",
+                        "quantity": 1,
+                        "title": "The Collection Snowboard: Liquid",
+                        "variant": {
+                            "id": "45808778510490",
+                            "image": {
+                                "src": "https://cdn.shopify.com/s/files/1/0680/8820/1370/files/Main_b13ad453-477c-4ed1-9b43-81f3345adfd6.jpg?v=1748627149"
+                            },
+                            "price": {
+                                "amount": 749.95,
+                                "currencyCode": "USD"
+                            },
+                            "product": {
+                                "id": "8514074902682",
+                                "title": "The Collection Snowboard: Liquid",
+                                "vendor": "Hydrogen Vendor",
+                                "type": "snowboard",
+                                "untranslatedTitle": "The Collection Snowboard: Liquid",
+                                "url": "/products/the-collection-snowboard-liquid"
+                            },
+                            "sku": null,
+                            "title": null,
+                            "untranslatedTitle": null
+                        },
+                        "finalLinePrice": {
+                            "amount": 749.95,
                             "currencyCode": "USD"
                         },
                         "sellingPlanAllocation": null,
@@ -149,7 +154,7 @@
                         "isoCode": "en-US"
                     },
                     "market": {
-                        "id": "gid://shopify/Market/22437560511",
+                        "id": "gid://shopify/Market/50758254746",
                         "handle": "us"
                     }
                 },
@@ -164,16 +169,16 @@
                     "selectedDeliveryOptions": [
                         {
                             "cost": {
-                                "amount": 6.9,
+                                "amount": 19.9,
                                 "currencyCode": "USD"
                             },
                             "costAfterDiscounts": {
-                                "amount": 6.9,
+                                "amount": 19.9,
                                 "currencyCode": "USD"
                             },
-                            "description": "2-4 business days",
-                            "handle": "c53ffe802a6d441c8484015f055076fe-8812bde6820ddc326ba9f8f4f772a075",
-                            "title": "Fast Shipping USA (Tracked)",
+                            "description": null,
+                            "handle": "b709c7597b514d8b431593d739c37b0f-43a4187e74483bfc7e73ab1815bde06c",
+                            "title": "Economy",
                             "type": "shipping"
                         }
                     ]
@@ -186,18 +191,18 @@
                     "countryCode": "US",
                     "firstName": "dane",
                     "lastName": "h",
-                    "phone": "2067784125",
+                    "phone": null,
                     "province": "WA",
                     "provinceCode": "WA",
                     "zip": "98126"
                 },
                 "subtotalPrice": {
-                    "amount": 2.45,
+                    "amount": 14.5,
                     "currencyCode": "USD"
                 },
                 "shippingLine": {
                     "price": {
-                        "amount": 6.9,
+                        "amount": 19.9,
                         "currencyCode": "USD"
                     }
                 },
@@ -207,19 +212,69 @@
                     "currencyCode": "USD"
                 },
                 "totalPrice": {
-                    "amount": 9.35,
+                    "amount": 34.4,
                     "currencyCode": "USD"
                 },
                 "transactions": []
             }
         },
         "type": "standard",
-        "timestamp": "2026-01-16T01:06:06.270Z",
-        "context": "...",
+        "timestamp": "2026-01-19T02:18:39.881Z",
+        "context": {
+            "document": {
+                "location": {
+                    "href": "https://terra-dev-plus-store.myshopify.com/checkouts/cn/hWN7lssY5ZBHq2tgDqvwIGQ5/en-us?_r=AQABR405gwFBN-RjLKbxo8priUxkV2doLLmq3yFuDDCTAaA&preview_theme_id=148891467930",
+                    "hash": "",
+                    "host": "terra-dev-plus-store.myshopify.com",
+                    "hostname": "terra-dev-plus-store.myshopify.com",
+                    "origin": "https://terra-dev-plus-store.myshopify.com",
+                    "pathname": "/checkouts/cn/hWN7lssY5ZBHq2tgDqvwIGQ5/en-us",
+                    "port": "",
+                    "protocol": "https:",
+                    "search": "?_r=AQABR405gwFBN-RjLKbxo8priUxkV2doLLmq3yFuDDCTAaA&preview_theme_id=148891467930"
+                },
+                "referrer": "https://terra-dev-plus-store.myshopify.com/products/the-complete-snowboard?_pos=1&_sid=13a8b9e76&_ss=r",
+                "characterSet": "UTF-8",
+                "title": "Checkout - terra-dev-plus-store"
+            },
+            "navigator": {
+                "language": "en-US",
+                "cookieEnabled": true,
+                "languages": [
+                    "en-US"
+                ],
+                "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"
+            },
+            "window": {
+                "innerHeight": 483,
+                "innerWidth": 1583,
+                "outerHeight": 983,
+                "outerWidth": 1425,
+                "pageXOffset": 0,
+                "pageYOffset": 755.5556030273438,
+                "location": {
+                    "href": "https://terra-dev-plus-store.myshopify.com/checkouts/cn/hWN7lssY5ZBHq2tgDqvwIGQ5/en-us?_r=AQABR405gwFBN-RjLKbxo8priUxkV2doLLmq3yFuDDCTAaA&preview_theme_id=148891467930",
+                    "hash": "",
+                    "host": "terra-dev-plus-store.myshopify.com",
+                    "hostname": "terra-dev-plus-store.myshopify.com",
+                    "origin": "https://terra-dev-plus-store.myshopify.com",
+                    "pathname": "/checkouts/cn/hWN7lssY5ZBHq2tgDqvwIGQ5/en-us",
+                    "port": "",
+                    "protocol": "https:",
+                    "search": "?_r=AQABR405gwFBN-RjLKbxo8priUxkV2doLLmq3yFuDDCTAaA&preview_theme_id=148891467930"
+                },
+                "origin": "https://terra-dev-plus-store.myshopify.com",
+                "screen": {
+                    "height": 1112,
+                    "width": 1710
+                },
+                "screenX": 0,
+                "screenY": 39,
+                "scrollX": 0,
+                "scrollY": 755.5556030273438
+            }
+        },
         "seq": 1,
-        "clientId": "be0db2a7-be2b-40ca-b502-a4c868d68385"
-    },
-    "eventNameAsSubscribed": "payment_info_submitted",
-    "subscriptionId": "23d8d440-2ddf-4b57-9227-4ac018772292",
-    "status": "SUCCESS"
+        "clientId": "c39ac1e5-559b-49e3-bd26-481a67a4faf5"
+    }
 }
