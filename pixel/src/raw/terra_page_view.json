@@ -1,0 +1,22 @@
+    {
+        "event": "terra_page_view",
+        "event_id": "663a6fe3-7212-40d0-a256-0fd126fcf7c0",
+        "timestamp": "2026-01-19T02:12:47.606Z",
+        "ctx_version": "1.0.9",
+        "ctx_id": "c2aa6e60-65fc-4d42-9dfe-193be9ec5ca7",
+        "iso_week": "2026_W04",
+        "device_type": "desktop",
+        "th_vid": "8a10bae8-d4e5-43aa-a453-9d39395e1397",
+        "session_key": "5a09dcba-0abb-46c0-9ab7-9ef91320976e",
+        "session_start": "2026-01-19T02:07:06.696Z",
+        "terra_ga_cid": "1130967260.1767928620",
+        "terra_ga_sid": "1768788689",
+        "terra_ga_sn": 22,
+        "page_hostname": "terra-dev-plus-store.myshopify.com",
+        "page_location": "https://terra-dev-plus-store.myshopify.com/products/the-collection-snowboard-liquid",
+        "page_path": "/products/the-collection-snowboard-liquid",
+        "page_title": "The Collection Snowboard: Liquid – terra-dev-plus-store",
+        "page_referrer": "https://terra-dev-plus-store.myshopify.com/collections/all",
+        "page_type": "product",
+        "gtm.uniqueEventId": 5
+    }

@@ -1,0 +1,50 @@
+{
+	"source": "shopify_custom_pixel",
+	"event_name": "terra_purchase",
+	"event_id": "d25cf1f7-6474-424a-affd-50a5e8ffc7a4",
+	"event_time": "2026-01-17T02:14:34.000Z",
+	"payload": {
+		"shopify_event": "checkout_completed",
+		"th_vid": "3241a592-544a-4b4c-9aa3-a22c172ce456",
+		"session_key": "11724fb5-de60-4db8-9d6b-6a051426fa7b",
+		"session_start": "2026-01-17T02:10:24.496Z",
+		"ga4_client_id": "1974403358.1768615826",
+		"ga4_session_id": "1768615825",
+		"ga4_session_number": 1,
+		"checkout_id": "d6a6c585638307484af2c2fb71083022",
+		"order_id": "6874354122943",
+		"ecommerce": {
+			"currency": "USD",
+			"value": 41.65,
+			"shipping": 6.9,
+			"tax": 0,
+			"shipping_tier": null,
+			"items": [
+				{
+					"item_id": "shopify_US_7318157557951_43049246949567",
+					"item_group_id": "shopify_US_7318157557951",
+					"product_id": 7318157557951,
+					"variant_id": 43049246949567,
+					"sku": "THEACIDRELFB1",
+					"item_name": "Acid Relief",
+					"item_brand": "Terra Health Essentials",
+					"item_variant": "30 Day Supply - OTP",
+					"item_category": "Gut Health",
+					"price": 49,
+					"quantity": 1,
+					"index": 0,
+					"currency": "USD",
+					"affiliation": "shopify_web_store"
+				}
+			],
+			"transaction_id": "6874354122943"
+		}
+	}
+}
+
+
+
+
+
+
+
