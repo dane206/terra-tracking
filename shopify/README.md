@@ -1,55 +1,180 @@
-Below is a **final-draft README section** followed by **final-draft test notes**.
-You can paste these directly into your documentation. Nothing speculative, nothing new.
+# Terra Theme Scripts — Storefront Architecture (Authoritative)
+
+These Shopify theme snippets implement the Terra storefront tracking pipeline that feeds:
+
+**Shopify → Checkout Pixel → Cloud Run → GA4 MP → BigQuery → Terra analytics**
+
+This is a **strict, layered system**. Each snippet has exactly one responsibility.
 
 ---
 
-# Terra Theme Scripts — README
+## Render Block (Authoritative Load Order)
 
-Canonical, source-of-truth **Shopify theme snippets** for Terra ecommerce tracking.
-
-These snippets intentionally implement **identity → utilities → producers → transport** with strict scope separation and deterministic load order.
-
-All snippets are stored as `.liquid` in Shopify and mirrored verbatim as `.js` files in backup documentation.
-
----
-
-## Render Block (Authoritative)
-
-The **render block** is the ordered list of `{% render %}` statements in `theme.liquid` that defines **what loads, where, and in what order**.
-
-This is the *only* supported integration point.
+This block in `theme.liquid` is the **only supported integration point**.
 
 ```liquid
-{% render '01-terra-identity-ssot' %}
-{% render '02-terra-user-identity' %}
-{% render '03-terra-item-utils' %}
+{% render '00-terra-gtm-transport' %}
+
+{% render '01-terra-attribution-bootstrap' %}   <!-- URL → cookies -->
+{% render '02-terra-identity-ssot' %}           <!-- cookies → terra_ctx -->
+{% render '03-terra-item-utils' %}              <!-- canonical item contract -->
+{% render '04-terra-checkout-bridge' %}         <!-- terra_ctx → cart.attributes -->
 
 {% if request.page_type == 'product' %}
-  {% render '04-terra-view-item-producer' %}
-  {% render '05-terra-add-to-cart-producer' %}
+  {% render '05-terra-view-item-producer' %}
+  {% render '06-terra-add-to-cart-producer' %}
 {% endif %}
 
 {% if request.page_type == 'collection' %}
-  {% render '06-terra-view-item-list-collection' %}
+  {% render '07-terra-view-item-list-collection' %}
 {% endif %}
 
 {% if request.page_type == 'search' %}
-  {% render '07-terra-view-item-list-search' %}
+  {% render '08-terra-view-item-list-search' %}
 {% endif %}
-
-{% render '00-terra-gtm-transport' %}
 ```
 
-**Rules:**
+### Load Order Rules
 
-* Identity **must** load before anything else
-* Utilities **must** load before producers
-* GTM **must** load last
-* Producers are page-scoped only
+1. Attribution **must** run before identity
+2. Identity **must** run before checkout bridge
+3. Item utils **must** load before producers
+4. Producers run last
+5. GTM can load early because events are pushed after identity
 
-## Required DOM contract (already mostly true in Dawn)
-- Each product card link must expose data attributes.
-- `card-product` needs this added:
+---
+
+## Layer Responsibilities
+
+### `01-terra-attribution-bootstrap`
+
+**Purpose:** Capture UTMs and click IDs from landing URL and persist to cookies.
+
+Writes cookies only:
+
+```
+terra_ft_*
+terra_lt_*
+terra_gclid / gbraid / wbraid / msclkid / fbclid / ttclid
+```
+
+No ctx. No dataLayer. No cart calls.
+
+---
+
+### `02-terra-identity-ssot`
+
+**Purpose:** Build `window.terra_ctx` from cookies and device/session state.
+
+Reads cookies only:
+
+* `th_vid`
+* `terra_ga_*`
+* `terra_ft_*`, `terra_lt_*`
+* click IDs
+
+Produces:
+
+```
+window.terra_ctx
+```
+
+No URL parsing. No cart calls.
+
+---
+
+### `03-terra-item-utils`
+
+**Purpose:** Canonical item contract for every ecommerce event.
+
+Exports:
+
+```
+terraBuildCanonicalItem()
+terraValidateCanonicalItem()
+```
+
+Producers never build items manually.
+
+---
+
+### `04-terra-checkout-bridge`
+
+**Purpose:** Bridge storefront identity into checkout.
+
+Reads `terra_ctx` and writes to:
+
+```
+/cart/update.js → cart.attributes → checkout.attributes
+```
+
+This is the only way checkout sees identity, GA4 ids, UTMs, click IDs.
+
+---
+
+### Producers (05–08)
+
+Each producer:
+
+1. Gathers Shopify product data
+2. Calls `terraBuildCanonicalItem`
+3. Pushes event via `terraPushEvent`
+
+They never construct item objects.
+
+---
+
+### `00-terra-gtm-transport`
+
+Loads GTM and provides the dataLayer transport once identity is ready.
+
+---
+
+## Data Flow (Critical)
+
+```
+URL params
+   ↓
+01 attribution cookies
+   ↓
+02 terra_ctx
+   ↓
+04 cart.attributes
+   ↓
+checkout.attributes
+   ↓
+checkout pixel → Cloud Run → GA4 MP
+```
+
+This is why attribution and identity must run before the bridge.
+
+---
+
+## Canonical Guarantees
+
+* Cookie name = ctx key = cart attribute key = checkout attribute key
+* `items[]` schema is enforced by `terra-item-utils`
+* Producers cannot cause schema drift
+* Checkout always receives full identity + attribution
+* GA4 MP stitching works because GA4 IDs cross the boundary
+
+---
+
+## What is intentionally NOT here
+
+* No DOM data attributes
+* No item construction in producers
+* No attribution parsing inside identity
+* No cart calls outside checkout bridge
+
+Those were sources of previous drift and are now forbidden.
+
+---
+
+## Required DOM contract
+
+* Each product card link must expose data attributes.
+* `card-product.liquid` needs this added:
 
 ```
 <a
@@ -66,51 +191,9 @@ This is the *only* supported integration point.
 >
 ```
 
-
 ---
 
-## File Map
+This structure is locked unless the **identity contract** or **item schema contract** intentionally changes.
 
-* **`00-terra-gtm-transport`**
-  Loads Google Tag Manager after the dataLayer has been populated.
 
-* **`01-terra-identity-ssot`**
-  Canonical identity source of truth.
-  Sets `th_vid`, `session_key`, `session_start`, page + device context.
-  Exports shared helpers (`terraGetUUID`, `terraNowIso`).
-  Versioned (`v1.0.6`).
 
-* **`02-terra-user-identity`**
-  Emits authenticated identity **only when a Shopify customer exists**.
-  Provides `customer_id` without polluting anonymous sessions.
-
-* **`03-terra-item-utils`**
-  Canonical item builder + validator.
-  Enforces the `items[]` contract used by all ecommerce events.
-
-* **`04-terra-view-item-producer`**
-  Emits validated `view_item` events on product pages.
-
-* **`05-terra-add-to-cart-producer`**
-  Emits validated `add_to_cart` events when items are added to cart.
-
-* **`06-terra-view-item-list-collection`**
-  Emits validated `view_item_list` events for collection pages.
-
-* **`07-terra-view-item-list-search`**
-  Emits validated `view_item_list` events for search results.
-
----
-
-## Design Guarantees
-
-* `items[]` contains **SKU-level facts only**
-* `ecommerce` contains **currency, totals, and transaction context**
-* Invalid items are **never emitted**
-* Identity is **truthful, explicit, and versioned**
-* GTM never loads before the dataLayer is ready
-* No snippet mutates another snippet’s state
-
-This structure is locked unless identity semantics or ecommerce contracts intentionally change.
-
----
