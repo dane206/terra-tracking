@@ -1,10 +1,10 @@
 {% if template.name == 'collection' and collection %}
-<script id="terra_view_item_list_collection">
+<script id="07-terra_view_item_list_collection">
 (function () {
   if (window.__terra_view_item_list_collection_ran) return;
   window.__terra_view_item_list_collection_ran = true;
 
-  if (!window.terraBuildCanonicalItem || !window.terraPushEvent) return;
+  if (!window.terraBuildCanonicalItem) return;
 
   var item_list_id = {{ collection.handle | json }};
   var item_list_name = {{ collection.title | json }};

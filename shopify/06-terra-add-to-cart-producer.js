@@ -1,9 +1,9 @@
-<script id="terra_add_to_cart_producer">
+<script id="06-terra_add_to_cart_producer">
 (function () {
   if (window.__terra_add_to_cart_ran) return;
   window.__terra_add_to_cart_ran = true;
 
-  if (!window.terraBuildCanonicalItem || !window.terraPushEvent) return;
+  if (!window.terraBuildCanonicalItem) return;
 
   var variants = {{ product.variants | json }};
   var currency = {{ shop.currency | json }};

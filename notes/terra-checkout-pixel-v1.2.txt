@@ -1,0 +1,171 @@
+console.log("[shopify_checkout_pixel] load terra-checkout-pixel-v1.2");
+
+/* =========================
+   terra-checkout-pixel-v1.2
+   ========================= */
+
+var ENDPOINT = "https://pixel-ingest-dev-600339193870.us-central1.run.app/track";
+
+/* =========================
+   Helpers
+========================= */
+
+function uuidv4() {
+  if (self.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0;
+    var v = c === "x" ? r : (r & 3 | 8);
+    return v.toString(16);
+  });
+}
+
+function digits(x) {
+  return String(x || "").replace(/\D/g, "");
+}
+
+function post(event_name, event) {
+  try {
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      keepalive: true,
+      body: JSON.stringify({
+        data_source: "shopify_checkout_pixel",
+        event_name: event_name,
+        event_id: event && event.id ? String(event.id) : uuidv4(),
+        event_time: new Date().toISOString(),
+        raw: JSON.parse(JSON.stringify(event))
+      })
+    });
+  } catch (_) {}
+}
+
+/* =========================
+   GA4 Helpers
+========================= */
+
+function buildGA4Items(checkout) {
+  var items = [];
+  var lines = checkout.lineItems || [];
+
+  for (var i = 0; i < lines.length; i++) {
+    var li = lines[i];
+    if (!li || !li.variant) continue;
+
+    var productId = digits(li.variant.product && li.variant.product.id);
+    var variantId = digits(li.variant.id);
+
+    if (!productId || !variantId) continue;
+
+    items.push({
+      item_id: "shopify_US_" + productId + "_" + variantId,
+      item_name: li.title || "",
+      price: Number(li.variant.price && li.variant.price.amount),
+      quantity: li.quantity || 1
+    });
+  }
+
+  return items;
+}
+
+function pushGA4(eventName, ecommerce) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    ecommerce: ecommerce
+  });
+}
+
+/* =========================
+   GA4 Mappings
+========================= */
+
+function sendBeginCheckout(event) {
+  try {
+    var c = event.data.checkout;
+    var items = buildGA4Items(c);
+    if (!items.length) return;
+
+    pushGA4("begin_checkout", {
+      currency: c.currencyCode,
+      value: Number(c.totalPrice && c.totalPrice.amount),
+      items: items
+    });
+  } catch (_) {}
+}
+
+function sendAddShippingInfo(event) {
+  try {
+    var c = event.data.checkout;
+    var items = buildGA4Items(c);
+    if (!items.length) return;
+
+    pushGA4("add_shipping_info", {
+      currency: c.currencyCode,
+      value: Number(c.totalPrice && c.totalPrice.amount),
+      items: items
+    });
+  } catch (_) {}
+}
+
+function sendAddPaymentInfo(event) {
+  try {
+    var c = event.data.checkout;
+    var items = buildGA4Items(c);
+    if (!items.length) return;
+
+    pushGA4("add_payment_info", {
+      currency: c.currencyCode,
+      value: Number(c.totalPrice && c.totalPrice.amount),
+      items: items
+    });
+  } catch (_) {}
+}
+
+function sendPurchase(event) {
+  try {
+    var c = event.data.checkout;
+    var items = buildGA4Items(c);
+    if (!items.length) return;
+
+    pushGA4("purchase", {
+      transaction_id: digits(c.order && c.order.id),
+      value: Number(c.totalPrice && c.totalPrice.amount),
+      currency: c.currencyCode,
+      items: items
+    });
+  } catch (_) {}
+}
+
+/* =========================
+   Subscriptions
+========================= */
+
+analytics.subscribe("checkout_started", function (event) {
+  post("checkout_started", event);
+  sendBeginCheckout(event);
+});
+
+analytics.subscribe("checkout_shipping_info_submitted", function (event) {
+  post("checkout_shipping_info_submitted", event);
+  sendAddShippingInfo(event);
+});
+
+analytics.subscribe("payment_info_submitted", function (event) {
+  post("payment_info_submitted", event);
+  sendAddPaymentInfo(event);
+});
+
+analytics.subscribe("checkout_completed", function (event) {
+  post("checkout_completed", event);
+  sendPurchase(event);
+});
+
+/* Optional — keep these only for ledger */
+analytics.subscribe("checkout_contact_info_submitted", function (event) {
+  post("checkout_contact_info_submitted", event);
+});
+
+analytics.subscribe("checkout_address_info_submitted", function (event) {
+  post("checkout_address_info_submitted", event);
+});

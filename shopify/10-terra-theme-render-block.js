@@ -1,9 +1,9 @@
-{% render '00-terra-gtm-transport' %}
+{% render '00-terra-datalayer-api' %}
 
-{% render '01-terra-attribution-bootstrap' %}   <!-- URL → cookies -->
-{% render '02-terra-identity-ssot' %}           <!-- cookies → ctx -->
-{% render '03-terra-item-utils' %}              <!-- canonical item builder -->
-{% render '04-terra-checkout-bridge' %}         <!-- ctx → cart.attributes -->
+{% render '01-terra-attribution-bootstrap' %}
+{% render '02-terra-identity-ssot' %}
+{% render '03-terra-item-utils' %}
+{% render '04-terra-checkout-bridge' %}
 
 {% if request.page_type == 'product' %}
   {% render '05-terra-view-item-producer' %}
@@ -17,3 +17,5 @@
 {% if request.page_type == 'search' %}
   {% render '08-terra-view-item-list-search' %}
 {% endif %}
+
+{% render '99-terra-gtm-loader' %}

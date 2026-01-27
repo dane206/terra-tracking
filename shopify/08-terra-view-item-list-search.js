@@ -1,10 +1,10 @@
 {% if template.name == 'search' %}
-<script id="terra_view_item_list_search">
+<script id="08-terra_view_item_list_search">
 (function () {
   if (window.__terra_view_item_list_search_ran) return;
   window.__terra_view_item_list_search_ran = true;
 
-  if (!window.terraBuildCanonicalItem || !window.terraPushEvent) return;
+  if (!window.terraBuildCanonicalItem) return;
 
   var item_list_id = "search_results";
   var item_list_name = "search_results";

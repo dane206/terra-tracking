@@ -1,7 +1,7 @@
-<script id="terra-gtm-transport">
+<script id="09-terra-gtm-loader">
 (function () {
-  if (window.__terra_gtm_transport_ran__) return;
-  window.__terra_gtm_transport_ran__ = true;
+  if (window.__terra_gtm_loaded__) return;
+  window.__terra_gtm_loaded__ = true;
 
   window.dataLayer = window.dataLayer || [];
 
