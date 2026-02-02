@@ -1,0 +1,256 @@
+===== funnel_dev.checkout_funnel =====
+[
+  {
+    "name": "step",
+    "type": "STRING"
+  },
+  {
+    "name": "checkouts",
+    "type": "INTEGER"
+  }
+]
+
+===== mart_dev.daily_events =====
+[
+  {
+    "name": "d",
+    "type": "DATE"
+  },
+  {
+    "name": "data_source",
+    "type": "STRING"
+  },
+  {
+    "name": "event_name",
+    "type": "STRING"
+  },
+  {
+    "name": "event_id",
+    "type": "STRING"
+  },
+  {
+    "name": "event_time",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "raw",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "cnt",
+    "type": "INTEGER"
+  }
+]
+
+===== mart_dev.shopify_checkouts =====
+[
+  {
+    "name": "checkout_token",
+    "type": "STRING"
+  },
+  {
+    "name": "first_seen_at",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "last_seen_at",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "started",
+    "type": "BOOLEAN"
+  },
+  {
+    "name": "contact_submitted",
+    "type": "BOOLEAN"
+  },
+  {
+    "name": "address_submitted",
+    "type": "BOOLEAN"
+  },
+  {
+    "name": "shipping_submitted",
+    "type": "BOOLEAN"
+  },
+  {
+    "name": "payment_submitted",
+    "type": "BOOLEAN"
+  },
+  {
+    "name": "completed",
+    "type": "BOOLEAN"
+  },
+  {
+    "name": "last_step_reached",
+    "type": "STRING"
+  }
+]
+
+===== raw_dev.events_raw =====
+[
+  {
+    "name": "received_at",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "data_source",
+    "type": "STRING"
+  },
+  {
+    "name": "event_name",
+    "type": "STRING"
+  },
+  {
+    "name": "event_id",
+    "type": "STRING"
+  },
+  {
+    "name": "event_time",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "raw",
+    "type": "JSON"
+  }
+]
+
+===== stg_dev.checkout_events =====
+[
+  {
+    "name": "received_at",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "event_time",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "source",
+    "type": "STRING"
+  },
+  {
+    "name": "event_name",
+    "type": "STRING"
+  },
+  {
+    "name": "event_id",
+    "type": "STRING"
+  },
+  {
+    "name": "th_vid",
+    "type": "STRING"
+  },
+  {
+    "name": "session_key",
+    "type": "STRING"
+  },
+  {
+    "name": "session_start",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "payload",
+    "type": "JSON"
+  }
+]
+
+===== stg_dev.events =====
+[
+  {
+    "name": "received_at",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "event_time",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "data_source",
+    "type": "STRING"
+  },
+  {
+    "name": "event_name",
+    "type": "STRING"
+  },
+  {
+    "name": "event_id",
+    "type": "STRING"
+  },
+  {
+    "name": "raw",
+    "type": "JSON"
+  }
+]
+
+===== stg_dev.events_base =====
+[
+  {
+    "name": "event_name",
+    "type": "STRING"
+  },
+  {
+    "name": "event_id",
+    "type": "STRING"
+  },
+  {
+    "name": "received_at",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "data_source",
+    "type": "STRING"
+  }
+]
+
+===== stg_dev.shopify_checkout_events =====
+[
+  {
+    "name": "received_at",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "event_time",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "event_name",
+    "type": "STRING"
+  },
+  {
+    "name": "event_id",
+    "type": "STRING"
+  },
+  {
+    "name": "raw",
+    "type": "JSON"
+  }
+]
+
+===== stg_dev.shopify_events =====
+[
+  {
+    "name": "received_at",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "event_time",
+    "type": "TIMESTAMP"
+  },
+  {
+    "name": "data_source",
+    "type": "STRING"
+  },
+  {
+    "name": "event_name",
+    "type": "STRING"
+  },
+  {
+    "name": "event_id",
+    "type": "STRING"
+  },
+  {
+    "name": "raw",
+    "type": "JSON"
+  }
+]
+
