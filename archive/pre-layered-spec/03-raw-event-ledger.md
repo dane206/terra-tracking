@@ -1,3 +1,6 @@
+⚠️ SUPERSEDED BY /00-spec/LAYER-01-ATTRIBUTION.md
+Do not edit. Kept for historical reference.
+
 # Raw Event Ledger (Contract)
 
 ## Purpose
