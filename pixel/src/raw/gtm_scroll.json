@@ -1,8 +1,0 @@
-    {
-        "event": "gtm.scrollDepth",
-        "gtm.scrollThreshold": 90,
-        "gtm.scrollUnits": "percent",
-        "gtm.scrollDirection": "vertical",
-        "gtm.triggers": "10",
-        "gtm.uniqueEventId": 14
-    }
