@@ -1,0 +1,102 @@
+| Layer           | Responsibility                      |
+| --------------- | ----------------------------------- |
+| Landing cookies | First touch referrer + landing page |
+| Identity SSOT   | th_vid, session, device, customer   |
+| Theme events    | ecommerce + ctx                     |
+| Checkout pixel  | checkout + order + user             |
+| Track route     | store exactly what it receives      |
+
+
+Exactly — if we want a **clean, future-proof event schema**, it helps to **think in layers**, each with a clear responsibility. Here’s a robust plan for **how many layers and what goes in each**:
+
+---
+
+## **1. Identity Layer**
+
+* **Purpose:** Who the user is, persistent across sessions and transactions.
+* **Fields:**
+
+  * `user_id` / `customer_id` / `shopify_customer_id`
+  * `ga_client_id` / `terra_ga_cid` (Google Analytics client ID)
+  * `th_vid` (persistent browser/user identifier)
+  * Optional: hashed email or other persistent identity tokens
+
+---
+
+## **2. Attribution Layer**
+
+* **Purpose:** How the user found you or what marketing touchpoints influenced them.
+* **Fields:**
+
+  * First-touch (FT) and last-touch (LT) sources:
+
+    * `terra_ft_source`, `terra_ft_medium`, `terra_ft_campaign`, `terra_ft_content`
+    * `terra_lt_source`, `terra_lt_medium`, `terra_lt_campaign`, `terra_lt_content`
+  * UTMs (if tracking campaigns separately):
+
+    * `utm_source`, `utm_medium`, `utm_campaign`, `utm_content`
+
+---
+
+## **3. Session Layer**
+
+* **Purpose:** Context of the visit, tied to a browser session.
+* **Fields:**
+
+  * `session_key` (unique for each session)
+  * `session_start` (ISO timestamp)
+  * `ga_session_id`, `ga_session_number` (if GA4 is being used)
+  * Possibly: device info or browser info
+
+---
+
+## **4. Storefront Event Layer**
+
+* **Purpose:** Events generated from **front-end interactions**, non-transactional.
+* **Fields:**
+
+  * `event_name` (e.g., `page_viewed`, `view_item`, `add_to_cart`)
+  * `event_time` (ISO timestamp)
+  * Event-specific payload:
+
+    * `page_path`, `product_id`, `collection_id`, `search_term`, `value`, etc.
+
+---
+
+## **5. Checkout / Transaction Layer**
+
+* **Purpose:** Captures the conversion, cart, or purchase.
+* **Fields:**
+
+  * `checkout_id` / `transaction_id`
+  * `cart_items` / `line_items`
+  * `order_total` / `currency`
+  * `payment_method` (optional)
+  * `user_id` / `customer_id` (from Identity layer)
+  * `iso_week` or `iso_date` (for cohort/funnel analysis)
+
+---
+
+## **6. Raw / Debug Layer**
+
+* **Purpose:** Preserve original payload, unmodified, for troubleshooting or future proofing.
+* **Fields:**
+
+  * `raw` → full JSON of the original event
+  * Always store as JSON, never string
+  * Optional: versioning info, e.g., `schema_version: 1`
+
+---
+
+### ✅ **Advantages of Layered Approach**
+
+* You can **query by layer** easily in BigQuery (funnel, cohort, marketing attribution).
+* GA4 or other downstream systems can **derive exactly what they need** from the relevant layer.
+* Easy to **add new sources** (like GTM, custom pixels, server-side events) without breaking schema.
+* Clear separation between **persistent info** (identity, attribution) and **ephemeral info** (session, event).
+
+---
+
+If you want, I can **draft a single event JSON schema** that combines all 6 layers — this can become your **standard payload for Shopify, GTM, and pixel events**.
+
+Do you want me to do that next?

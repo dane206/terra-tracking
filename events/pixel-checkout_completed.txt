@@ -1,0 +1,328 @@
+{
+    "data_source": "shopify_checkout_pixel",
+    "event_name": "checkout_completed",
+    "event_id": "fd3be6ff-f30b-4d71-806c-3135a8f09e68",
+    "event_time": "2026-02-07T07:13:03.743Z",
+    "raw": {
+        "id": "fd3be6ff-f30b-4d71-806c-3135a8f09e68",
+        "name": "checkout_completed",
+        "data": {
+            "checkout": {
+                "buyerAcceptsEmailMarketing": true,
+                "buyerAcceptsSmsMarketing": false,
+                "attributes": [
+                    {
+                        "key": "th_vid",
+                        "value": "8a10bae8-d4e5-43aa-a453-9d39395e1397",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "session_key",
+                        "value": "97eb8084-14dc-4881-9782-4333a279ffce",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "session_start",
+                        "value": "2026-02-07T06:50:18.508Z",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_ga_cid",
+                        "value": "1130967260.1767928620",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "ga4_client_id",
+                        "value": "1130967260.1767928620",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_ga_sid",
+                        "value": "1770447020",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "ga4_session_id",
+                        "value": "1770447020",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_ga_sn",
+                        "value": "73",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "ga4_session_number",
+                        "value": "73",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_ft_source",
+                        "value": "dane",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_ft_medium",
+                        "value": "test",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_ft_campaign",
+                        "value": "validate",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_ft_id",
+                        "value": "1",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_lt_source",
+                        "value": "dane",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_lt_medium",
+                        "value": "test",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_lt_campaign",
+                        "value": "validate",
+                        "__typename": "NoteAttribute"
+                    },
+                    {
+                        "key": "terra_lt_id",
+                        "value": "1",
+                        "__typename": "NoteAttribute"
+                    }
+                ],
+                "billingAddress": {
+                    "address1": "1715 harbor ave sw # 2",
+                    "address2": null,
+                    "city": "seattle",
+                    "country": "US",
+                    "countryCode": "US",
+                    "firstName": "dane",
+                    "lastName": "h",
+                    "phone": null,
+                    "province": "WA",
+                    "provinceCode": "WA",
+                    "zip": "98126"
+                },
+                "token": "cb4398c88ccfe5ecf7d561a888682a6d",
+                "currencyCode": "USD",
+                "discountApplications": [
+                    {
+                        "allocationMethod": "ACROSS",
+                        "targetSelection": "ALL",
+                        "targetType": "LINE_ITEM",
+                        "title": "rs2mgmt99x",
+                        "type": "DISCOUNT_CODE",
+                        "value": {
+                            "percentage": 99
+                        }
+                    }
+                ],
+                "discountsAmount": {
+                    "amount": 1188,
+                    "currencyCode": "USD"
+                },
+                "email": "dane@rs2media.com",
+                "phone": null,
+                "lineItems": [
+                    {
+                        "discountAllocations": [
+                            {
+                                "amount": {
+                                    "amount": 1188,
+                                    "currencyCode": "USD"
+                                },
+                                "discountApplication": {
+                                    "allocationMethod": "ACROSS",
+                                    "targetSelection": "ALL",
+                                    "targetType": "LINE_ITEM",
+                                    "title": "rs2mgmt99x",
+                                    "type": "DISCOUNT_CODE",
+                                    "value": {
+                                        "percentage": 99
+                                    }
+                                }
+                            }
+                        ],
+                        "id": "45808778018970",
+                        "quantity": 2,
+                        "title": "The Collection Snowboard: Hydrogen",
+                        "variant": {
+                            "id": "45808778018970",
+                            "image": {
+                                "src": "https://cdn.shopify.com/s/files/1/0680/8820/1370/files/Main_0a40b01b-5021-48c1-80d1-aa8ab4876d3d.jpg?v=1748627148"
+                            },
+                            "price": {
+                                "amount": 600,
+                                "currencyCode": "USD"
+                            },
+                            "product": {
+                                "id": "8514074575002",
+                                "title": "The Collection Snowboard: Hydrogen",
+                                "vendor": "Hydrogen Vendor",
+                                "type": "snowboard",
+                                "untranslatedTitle": "The Collection Snowboard: Hydrogen",
+                                "url": "/products/the-collection-snowboard-hydrogen"
+                            },
+                            "sku": null,
+                            "title": null,
+                            "untranslatedTitle": ""
+                        },
+                        "finalLinePrice": {
+                            "amount": 1200,
+                            "currencyCode": "USD"
+                        },
+                        "sellingPlanAllocation": null,
+                        "properties": []
+                    }
+                ],
+                "localization": {
+                    "country": {
+                        "isoCode": "US"
+                    },
+                    "language": {
+                        "isoCode": "en-US"
+                    },
+                    "market": {
+                        "id": "gid://shopify/Market/50758254746",
+                        "handle": "us"
+                    }
+                },
+                "order": {
+                    "id": "6180710875290",
+                    "customer": {
+                        "id": "8222774984858",
+                        "isFirstOrder": false
+                    }
+                },
+                "delivery": {
+                    "selectedDeliveryOptions": [
+                        {
+                            "cost": {
+                                "amount": 4.9,
+                                "currencyCode": "USD"
+                            },
+                            "costAfterDiscounts": {
+                                "amount": 4.9,
+                                "currencyCode": "USD"
+                            },
+                            "description": null,
+                            "handle": "cb4398c88ccfe5ecf7d561a888682a6d-efb988e33c5c60287b6c4f2b06b49bda",
+                            "title": "Economy",
+                            "type": "shipping"
+                        }
+                    ]
+                },
+                "shippingAddress": {
+                    "address1": "1715 harbor ave sw # 2",
+                    "address2": null,
+                    "city": "seattle",
+                    "country": "US",
+                    "countryCode": "US",
+                    "firstName": "dane",
+                    "lastName": "h",
+                    "phone": null,
+                    "province": "WA",
+                    "provinceCode": "WA",
+                    "zip": "98126"
+                },
+                "subtotalPrice": {
+                    "amount": 12,
+                    "currencyCode": "USD"
+                },
+                "shippingLine": {
+                    "price": {
+                        "amount": 4.9,
+                        "currencyCode": "USD"
+                    }
+                },
+                "smsMarketingPhone": null,
+                "totalTax": {
+                    "amount": 0,
+                    "currencyCode": "USD"
+                },
+                "totalPrice": {
+                    "amount": 16.9,
+                    "currencyCode": "USD"
+                },
+                "transactions": [
+                    {
+                        "amount": {
+                            "amount": 16.9,
+                            "currencyCode": "USD"
+                        },
+                        "gateway": "bogus",
+                        "paymentMethod": {
+                            "type": "creditCard",
+                            "name": "BOGUS"
+                        }
+                    }
+                ]
+            }
+        },
+        "type": "standard",
+        "timestamp": "2026-02-07T07:13:03.720Z",
+        "context": {
+            "document": {
+                "location": {
+                    "href": "https://terra-dev-plus-store.myshopify.com/checkouts/cn/hWN8UUH7mRboYMgpS87AwYld/en-us/thank-you?_r=AQABOBBRCpNHD0V8dCpWygA3UMP8Q76QLdeHwyKc8lzjgxE",
+                    "hash": "",
+                    "host": "terra-dev-plus-store.myshopify.com",
+                    "hostname": "terra-dev-plus-store.myshopify.com",
+                    "origin": "https://terra-dev-plus-store.myshopify.com",
+                    "pathname": "/checkouts/cn/hWN8UUH7mRboYMgpS87AwYld/en-us/thank-you",
+                    "port": "",
+                    "protocol": "https:",
+                    "search": "?_r=AQABOBBRCpNHD0V8dCpWygA3UMP8Q76QLdeHwyKc8lzjgxE"
+                },
+                "referrer": "https://terra-dev-plus-store.myshopify.com/products/the-collection-snowboard-hydrogen?_pos=7&_sid=95c4fe175&_ss=r",
+                "characterSet": "UTF-8",
+                "title": "Thank you for your purchase! - terra-dev-plus-store - Checkout"
+            },
+            "navigator": {
+                "language": "en-US",
+                "cookieEnabled": true,
+                "languages": [
+                    "en-US"
+                ],
+                "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
+            },
+            "window": {
+                "innerHeight": 452,
+                "innerWidth": 1583,
+                "outerHeight": 983,
+                "outerWidth": 1425,
+                "pageXOffset": 0,
+                "pageYOffset": 0,
+                "location": {
+                    "href": "https://terra-dev-plus-store.myshopify.com/checkouts/cn/hWN8UUH7mRboYMgpS87AwYld/en-us/thank-you?_r=AQABOBBRCpNHD0V8dCpWygA3UMP8Q76QLdeHwyKc8lzjgxE",
+                    "hash": "",
+                    "host": "terra-dev-plus-store.myshopify.com",
+                    "hostname": "terra-dev-plus-store.myshopify.com",
+                    "origin": "https://terra-dev-plus-store.myshopify.com",
+                    "pathname": "/checkouts/cn/hWN8UUH7mRboYMgpS87AwYld/en-us/thank-you",
+                    "port": "",
+                    "protocol": "https:",
+                    "search": "?_r=AQABOBBRCpNHD0V8dCpWygA3UMP8Q76QLdeHwyKc8lzjgxE"
+                },
+                "origin": "https://terra-dev-plus-store.myshopify.com",
+                "screen": {
+                    "height": 1112,
+                    "width": 1710
+                },
+                "screenX": 285,
+                "screenY": 39,
+                "scrollX": 0,
+                "scrollY": 0
+            }
+        },
+        "seq": 1,
+        "clientId": "c39ac1e5-559b-49e3-bd26-481a67a4faf5"
+    }
+}

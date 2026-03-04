@@ -1,0 +1,48 @@
+✅ 04-terra-page-view-producer.liquid
+
+Role
+terraPushEvent('page_view', {});
+
+This is the only place page_view is produced.
+
+dataLayer.push({
+  event: "page_view",
+  event_id: "339d39a0-6ad0-43d2-8e6e-b6d9ede90f53",
+  timestamp: "2026-02-11T00:12:55.892Z",
+  ctx_version: "2.0.0",
+  ctx_id: "92924456-33b2-436c-8038-2888be339b89",
+  iso_week: "2026_W07",
+  device_type: "desktop",
+  th_vid: "8a10bae8-d4e5-43aa-a453-9d39395e1397",
+  session_key: "4ea65460-35a9-4f56-af22-94c9f76dc1df",
+  session_start: "2026-02-11T00:12:55.891Z",
+  terra_ga_cid: "1130967260.1767928620",
+  terra_ga_sid: "1770768726",
+  terra_ga_sn: 1,
+  terra_ft_source: "dane",
+  terra_ft_medium: "test",
+  terra_ft_campaign: "validate",
+  terra_ft_content: "",
+  terra_ft_term: "",
+  terra_ft_id: "1",
+  terra_lt_source: "dane",
+  terra_lt_medium: "test",
+  terra_lt_campaign: "validate",
+  terra_lt_content: "",
+  terra_lt_term: "",
+  terra_lt_id: "1",
+  terra_gclid: "",
+  terra_gbraid: "",
+  terra_wbraid: "",
+  terra_msclkid: "",
+  terra_fbclid: "",
+  terra_ttclid: "",
+  page_hostname: "terra-dev-plus-store.myshopify.com",
+  page_location: "https://terra-dev-plus-store.myshopify.com/?utm_source=dane&utm_medium=test&utm" +
+                 "_campaign=validate&utm_id=1&content_id=dl",
+  page_path: "/",
+  page_title: "terra-dev-plus-store",
+  page_referrer: "https://tagassistant.google.com/",
+  page_type: "index",
+  gtm.uniqueEventId: 446
+})

@@ -1,0 +1,26 @@
+1. https://console.cloud.google.com/run/overview?project=terra-shopify-analytics
+-- https://console.cloud.google.com/run/detail/us-central1/terra-tracking-dev/observability/metrics?project=terra-shopify-analytics
+-- https://console.cloud.google.com/storage/browser/run-sources-terra-shopify-analytics-us-central1/services/terra-tracking-dev?pageState=(%22StorageObjectListTable%22:(%22f%22:%22%255B%255D%22))&project=terra-shopify-analytics
+
+2. https://console.cloud.google.com/run/overview?project=terra-analytics-dev
+-- /Users/dane/projects/pixel-ingest-dev
+-- https://github.com/dane206/pixel-ingest-dev
+-- https://console.cloud.google.com/run/detail/us-central1/pixel-ingest-dev/observability/metrics?project=terra-analytics-dev
+-- https://console.cloud.google.com/storage/browser/run-sources-terra-analytics-dev-us-central1/services/pixel-ingest-dev?project=terra-analytics-dev&pageState=(%22StorageObjectListTable%22:(%22f%22:%22%255B%255D%22))
+-- https://console.cloud.google.com/run/detail/us-central1/pixel-ingest-prod/observability/metrics?project=terra-analytics-dev
+-- https://console.cloud.google.com/storage/browser/run-sources-terra-analytics-dev-us-central1/services/pixel-ingest-prod?pageState=(%22StorageObjectListTable%22:(%22f%22:%22%255B%255D%22))&project=terra-analytics-dev
+
+3. https://console.cloud.google.com/run/overview?project=terra-analytics-prod
+-- /Users/dane/projects/pixel-ingest-prod
+-- https://github.com/dane206/pixel-ingest-prod
+-- https://console.cloud.google.com/run/detail/us-central1/pixel-ingest-prod/observability/metrics?project=terra-analytics-prod
+-- https://console.cloud.google.com/storage/browser/run-sources-terra-analytics-prod-us-central1/services/pixel-ingest-prod?project=terra-analytics-prod&pageState=(%22StorageObjectListTable%22:(%22f%22:%22%255B%255D%22))
+
+4. tracking documentation
+-- /Users/dane/projects/terra-tracking
+-- https://github.com/dane206/terra-tracking
+
+5. terra-app attempt
+-- /Users/dane/projects/terra-app
+-- https://github.com/dane206/terra-app
+-- https://console.cloud.google.com/run/services?project=shopify-tracker-v2
