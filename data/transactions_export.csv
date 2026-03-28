@@ -1,6 +1,0 @@
-Order,Name,Kind,Gateway,Created At,Status,Amount,Currency,Card Type,Payment Method
-6866176180415,#1317649TH,sale,PayPal,2026-01-12 21:14:58 -0800,success,74.52,USD,"",""
-6866187190463,#1317650TH,sale,Credit/debit card,2026-01-12 21:25:26 -0800,success,21.94,USD,"",""
-6866261409983,#1317656TH,sale,ApplePay,2026-01-12 22:34:58 -0800,success,37.47,USD,"",""
-6866379538623,#1317663TH,sale,Klarna Pay over time,2026-01-13 00:38:26 -0800,success,36.97,USD,"",""
-6866440913087,#1317673TH,sale,Credit/debit card,2026-01-13 02:15:50 -0800,success,22.30,USD,"",""
