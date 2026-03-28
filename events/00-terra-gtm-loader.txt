@@ -1,9 +1,0 @@
-✅ 00-terra-gtm-loader.liquid
-
-Role
-Loads GTM
-Defines terraPushEvent()
-Queues events until GTM ready
-
-This is the transport layer.
-Nothing here touches ctx, cookies, or ecommerce.

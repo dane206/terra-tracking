@@ -25,14 +25,14 @@ tn: events_raw
 	b. https://www.googletagmanager.com/gtag/js?id=GT-WB5D87QK&cx=c&gtm=4e61d1
 
 3. Collector endpoint URL (exact) = ...
-	curl -i https://pixel-ingest-dev-600339193870.us-central1.run.app/health
-	curl -i https://pixel-ingest-dev-600339193870.us-central1.run.app/version
+	curl -i https://pixel-ingest-dev-7ak5xlux7q-uc.a.run.app/health
+	curl -i https://pixel-ingest-dev-7ak5xlux7q-uc.a.run.app/version
 curl -i -X POST \
-  "https://pixel-ingest-dev-600339193870.us-central1.run.app/v1/track" \
+  "https://pixel-ingest-dev-7ak5xlux7q-uc.a.run.app/v2/track" \
   -H "content-type: application/json" \
   --data '{"events":[{"source":"manual","event_name":"ping","event_id":"curl-proof-001","event_time":"2026-01-15T20:04:37Z"}]}'
 curl -i -X POST \
-  "https://pixel-ingest-dev-600339193870.us-central1.run.app/track" \
+  "https://pixel-ingest-dev-7ak5xlux7q-uc.a.run.app/track" \
   -H "content-type: application/json" \
   --data '{"events":[{"source":"manual","event_name":"ping","event_id":"curl-proof-001","event_time":"2026-01-15T20:04:37Z"}]}'
 
@@ -100,7 +100,7 @@ const order_number = order?.orderNumber ?? order?.name ?? null;
 ### DEV vs PROD (single-screen reference)
 `GET /version` 		→ 200
 `GET /health`  		→ 200
-`POST /v1/track` 	→ 204
+`POST /v2/track` 	→ 204
 `POST /track`    	→ 204
 `GET /` 			→ 404
 ---
@@ -144,6 +144,6 @@ BASE="https://pixel-ingest-prod-279703303694.us-central1.run.app"
 ID="curl-prod-proof-XXX"
 curl -i "$BASE/version"
 curl -i "$BASE/health"
-curl -i -X POST "$BASE/v1/track" -H "content-type: application/json" \
+curl -i -X POST "$BASE/v2/track" -H "content-type: application/json" \
   --data "{\"events\":[{\"source\":\"manual\",\"event_name\":\"ping\",\"event_id\":\"$ID\",\"event_time\":\"2026-01-15T00:00:00Z\"}]}"
 

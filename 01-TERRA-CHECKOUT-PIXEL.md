@@ -11,7 +11,7 @@ You have **proper, real dev/prod separation**.
 * URL:
 
   ```
-  https://pixel-ingest-dev-600339193870.us-central1.run.app
+  https://pixel-ingest-dev-7ak5xlux7q-uc.a.run.app
   ```
 
 **PROD**
@@ -33,13 +33,13 @@ Both exist. Both are real. Both are isolated.
 **DEV pixel (v1.9)** must point to:
 
 ```js
-https://pixel-ingest-dev-600339193870.us-central1.run.app/v1/track
+https://pixel-ingest-dev-7ak5xlux7q-uc.a.run.app/v2/track
 ```
 
 **PROD pixel (v1.9)** must point to:
 
 ```js
-https://pixel-ingest-prod-279703303694.us-central1.run.app/v1/track
+https://pixel-ingest-prod-279703303694.us-central1.run.app/v2/track
 ```
 
 No conditionals.
@@ -64,8 +64,8 @@ Just two explicit deployments.
 ### Final sanity check (do this once per env)
 
 ```bash
-curl -i https://pixel-ingest-dev-600339193870.us-central1.run.app/v1/track
-curl -i https://pixel-ingest-prod-279703303694.us-central1.run.app/v1/track
+curl -i https://pixel-ingest-dev-7ak5xlux7q-uc.a.run.app/v2/track
+curl -i https://pixel-ingest-prod-279703303694.us-central1.run.app/v2/track
 ```
 
 Any of:
