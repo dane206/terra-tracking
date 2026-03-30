@@ -8,7 +8,7 @@ import { sendTerraEventToGa4 } from "./ga4-writer.js";
 const app = express();
 app.use(bodyParser.json());
 
-app.post("/v1/track", async (req, res) => {
+app.post("/v2/track", async (req, res) => {
   const body = req.body;
 
   // 1) Always log/store raw event for debugging / BQ
